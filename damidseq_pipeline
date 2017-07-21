@@ -710,12 +710,12 @@ sub extend_reads_gatc {
 					if (@hits) {
 						# an intervening GATC
 						my $closest = (sort {$a <=> $b} @hits)[$#hits];
-						my $revised_len = $pos+$readlen - $closest;
+						my $revised_len = int($pos+$readlen - $closest);
 						$cigar = $revised_len."M";
-						$pos = $closest;
+						$pos = int($closest);
 					} else {
 						# no Great GATC
-						$pos -= $vars{'len'} - $readlen;
+						$pos -= int($vars{'len'} - $readlen);
 						$pos = max(1,$pos);
 					}
 				} else {
@@ -736,7 +736,7 @@ sub extend_reads_gatc {
 					if (@hits) {
 						# an intervening GATC
 						my $closest = (sort {$a <=> $b} @hits)[0];
-						my $revised_len = $closest - $pos;
+						my $revised_len = int($closest - $pos);
 						$cigar = $revised_len."M";
 					} else {
 						# no Great GATC
